@@ -8,13 +8,13 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  constructor( private router:Router) { }
+  constructor( private router: Router ) { }
 
   ngOnInit(): void {
   }
 
-login(){
-  this.router.navigateByUrl('/');
-}
+  login() {
+    this.router.navigateByUrl('/');
+  }
 
 }

@@ -4,7 +4,8 @@ Author: Wrappixel
 Email: niravjoshi87@gmail.com
 File: js
 */
-const initFunctions = () => {
+
+const customInitFunctions = () => {
     $(function() {
         "use strict";
         $(function() {
@@ -83,7 +84,7 @@ const initFunctions = () => {
         // ============================================================== 
         // Auto select left navbar
         // ============================================================== 
-        $(function() {
+/*         $(function() {
             var url = window.location;
             var element = $('ul#sidebarnav a').filter(function() {
                 return this.href == url;
@@ -96,7 +97,7 @@ const initFunctions = () => {
                 }
             }
     
-        });
+        }); */
         // ============================================================== 
         //tooltip
         // ============================================================== 
@@ -157,4 +158,5 @@ const initFunctions = () => {
     
     });
 }
-initFunctions();
+
+customInitFunctions();
