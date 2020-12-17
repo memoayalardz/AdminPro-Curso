@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {UsuarioService} from '../../services/usuario.service';
+import Swal from 'sweetalert2';
 
+
+/* import swal from 'sweetalert'; */
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -11,56 +16,66 @@ export class RegisterComponent  {
   public formSubmitted = false;
 
   public registerForm = this.fb.group({
-    nombre: ['', [ Validators.required, Validators.minLength(3) ]],
-    email: ['luisguillermo.ayala@coahuila.gob.mx', [ Validators.required, Validators.email ]],
-    password: ['123456', [ Validators.required, Validators.minLength(3) ]],
-    password2: ['1234526', [ Validators.required, Validators.minLength(3) ]],
+    nombre: ['Luis Ayala', [ Validators.required, Validators.minLength(3) ]],
+    email: ['lguillermoayala@hotmail.com', [ Validators.required, Validators.email ]],
+    password: ['123456', Validators.required],
+    password2: ['123456', Validators.required],
     terminos:[false,Validators.required]
 
   }, {
     validators: this.passwordsIguales('password','password2')
   });
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private usuarioService:UsuarioService,private router:Router) { }
 
   crearUsuario(){
-    console.log(this.registerForm);
-    if(this.registerForm.valid){
-        console.log("Posteando");
-        
-    }else{
-      console.log("Formuario incorrecto");
-      
-    }
-    console.log(this.registerForm.value);
+    this.formSubmitted = true;
+ 
+      if(this.registerForm.invalid){
+        return;
+      }
+      // realizar registro
+      this.usuarioService.crearUsuario(this.registerForm.value)
+      .subscribe(resp => {
+        console.log('usuario creado');
+        console.log(resp);
+         // ir al dashboard
+         this.router.navigateByUrl('/');
+      },(err) => {
+        Swal.fire('Error',err.error.msg,'error');
+
+      });
   }
 
   campoNoValido(campo:string):boolean{
-
-    console.log(campo + ":" + this.registerForm.get(campo).invalid);
-    console.log(campo + ":" + this.formSubmitted);
+  
     
-    if(this.registerForm.get(campo).valid && this.formSubmitted) {
+    if(this.registerForm.get(campo).invalid && this.formSubmitted) {
       return true;
     }else{
       return false;
     }
   }
   aceptaTerminos(){
+    
+    
     return !this.registerForm.get('terminos').value && this.formSubmitted;
   }
 
   contrasenasNoValidas(){
-   /*  const pass1 = this.registerForm.get('password').value;
+  
+    
+    const pass1 = this.registerForm.get('password').value;
     const pass2 = this.registerForm.get('password2').value;
-    if((pass1 === pass2) && this.formSubmitted){
+    if((pass1 !== pass2) && this.formSubmitted){
       return true
-    }else{ */
+    }else{
       return false
 
-    /* } */
+    }
 
   }
   passwordsIguales(pass1:string,pass2:string){
+
 
     return (formGroup:FormGroup) => {
       const pass1Control = formGroup.get(pass1);
