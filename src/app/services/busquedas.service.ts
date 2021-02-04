@@ -3,6 +3,8 @@ import {environment} from '../../environments/environment';
 import {catchError, map, switchAll, tap} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
 import {Usuario} from '../models/usuario.model';
+import { Medico } from '../models/medico.model';
+import { Hospital } from '../models/hospital.model';
 const base_url = environment.base_url;
 @Injectable({
   providedIn: 'root'
@@ -22,11 +24,20 @@ busqueda(
 
     return this.http.get<any[]>(url, this.headers)
             .pipe(
-              map((resp:any) => {
+              map( (resp:any) => {
                 switch(tipo){
                   case'usuarios':
 
                   return this.transformarUsuarios(resp.resultados)
+                  break;
+
+                  case'hospitales':
+
+                  return resp.resultados;
+                  break;
+                  case'medicos':
+
+                  return resp.resultados;
                   break;
 
                   default:
@@ -45,6 +56,16 @@ private transformarUsuarios(resultados:any[]):Usuario[]{
           
     );
 }
+
+private transformarMedicos(resultados:any[]):Medico[]{
+  return resultados;
+}
+
+private transformarHospitales(resultados:any[]):Hospital[]{
+  return resultados;
+}
+
+
 
 
   

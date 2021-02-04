@@ -12,6 +12,8 @@ import { ProfileComponent } from './profile/profile.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { UsuariosComponent } from './mantenimientos/usuarios/usuarios.component';
 import { HospitalesComponent } from './mantenimientos/hospitales/hospitales.component';
+import { MedicosComponent } from './mantenimientos/medicos/medicos.component';
+import { MedicoComponent } from './mantenimientos/medicos/medico.component';
 
 const routes: Routes = [
     { 
@@ -27,9 +29,10 @@ const routes: Routes = [
             { path: 'perfil', component: ProfileComponent , data:{titulo:'Perfil'}},
             { path: 'rxjs', component: RxjsComponent , data:{titulo:'Rxjs'}},
             // Mantenimientos
-            { path: 'usuarios', component: UsuariosComponent , data:{titulo:'Usuarios de aplicación'}},
-            { path: 'hospitales', component: HospitalesComponent , data:{titulo:'Hospitales de aplicación'}},
-            { path: 'medicos', component: UsuariosComponent , data:{titulo:'Médicos de aplicación'}},
+            { path: 'usuarios', component: UsuariosComponent , data:{titulo:'Administración de Usuarios'}},
+            { path: 'hospitales', component: HospitalesComponent , data:{titulo:'Administración de Hospitales'}},
+            { path: 'medicos', component: MedicosComponent , data:{titulo:'Administración de Médicos'}},
+            { path: 'medico/:id', component: MedicoComponent , data:{titulo:'Administración de Médicos'}},
         ]
     },
 ];

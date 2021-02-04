@@ -49,3 +49,13 @@
     display: none;
 
 }
+
+.w200{
+width: 200px;
+height: 200px;
+}
+
+.w140{
+    width: 140px;
+    height: 140px;
+    }

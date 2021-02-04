@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { delay } from 'rxjs/operators';
 import { FileUploadService } from 'src/app/services/file-upload.service';
 import Swal from 'sweetalert2';
 import {ModalImagenService} from '../../services/modal-imagen.service';
@@ -20,7 +21,10 @@ export class ModalImagenComponent implements OnInit {
   }
 
 cerrarModal(){
-  this.imgTemp =null;
+  this.imgTemp = null;
+  delay(100);
+  console.log(this.imgTemp);
+  
 this.modalImagenService.cerrarModal();
 }
 cambiarImagen(file:File){
