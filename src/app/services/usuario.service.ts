@@ -25,7 +25,7 @@ export class UsuarioService {
     return this.http.post(`${base_url}/usuarios`,formData)
     .pipe(
       tap((resp: any)=>{
-        localStorage.setItem('ap__token',resp.token);
+        this.guardarLocalStorage(resp.token,resp.menu);
         
         })
     );
@@ -50,7 +50,7 @@ loginUsuario(formData:LoginForm){
     return this.http.post(`${base_url}/login`,formData)
     .pipe(
       tap((resp: any)=>{
-        localStorage.setItem('ap__token',resp.token);
+        this.guardarLocalStorage(resp.token,resp.menu);
         
         })
     );
@@ -62,8 +62,7 @@ loginUsuario(formData:LoginForm){
     return this.http.post(`${base_url}/login/google`,{token})
     .pipe(
       tap((resp: any)=>{
-        localStorage.setItem('ap__token',resp.token);
-        
+        this.guardarLocalStorage(resp.token,resp.menu);
         })
     );
       
@@ -81,7 +80,7 @@ validarToken():Observable<boolean>{
       const{email,role,google,nombre,img,uid} = resp.usuario;
       this.usuario = new Usuario(nombre,email, '',img,google,role,uid);
       this.usuario.imprimirUsuario();
-      localStorage.setItem('ap__token',resp.token);
+      this.guardarLocalStorage(resp.token,resp.menu);
       return true;
       }),
       catchError(error => of(false))
@@ -89,7 +88,9 @@ validarToken():Observable<boolean>{
 }
 
 logout(){
+  // TODO: borrar menu
   localStorage.removeItem('ap__token');
+  localStorage.removeItem('ap__menu');
   this.auth2.signOut().then( () => {
     this.ngZone.run(()=>{
 
@@ -147,6 +148,13 @@ get headers(){
   }
 }
 
+get role():'ADMIN_ROLE'  |'USER_ROLE'{
+  return this.usuario.role;
+}
 
-  
+guardarLocalStorage(token:string,menu:any){
+localStorage.setItem('ap__token', token);
+localStorage.setItem('ap__menu', JSON.stringify(menu));
+}
+
 }
