@@ -14,13 +14,11 @@ declare function customInitFunctions();
 export class PagesComponent implements OnInit {
 
   constructor( private settingsService: SettingsService,
-    private sidebarService:SidebarService ) { }
+               private sidebarService: SidebarService ) { }
 
   ngOnInit(): void {
     customInitFunctions();
     this.sidebarService.cargarMenu();
-    console.log(this.sidebarService.menu);
-    
   }
 
 }
